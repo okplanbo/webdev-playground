@@ -1,0 +1,35 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+  font-family: Roboto, Arial, Helvetica, sans-serif;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+ul {
+  list-style-type: none;
+  text-align: left;
+  padding: 0;
+
+  li {
+    margin-top: 0.5em;
+  }
+}
+
+.container {
+  width: 30em;
+  margin: 0 auto;
+}
+
+.card {
+  padding: 2em;
+  width: 14em;
+  text-align: left;
+}
+
+footer {
+  margin-top: auto;
+}
