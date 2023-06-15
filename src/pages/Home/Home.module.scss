@@ -1,0 +1,21 @@
+.container {
+  margin: 3em auto 0;
+  display: flex;
+  flex-wrap: wrap;
+
+  ul {
+    list-style-type: none;
+    text-align: left;
+    padding: 0;
+
+    li {
+      margin-top: 0.5em
+    }
+  }
+}
+
+.card {
+  padding: 2em;
+  width: 14em;
+  text-align: left;
+}
