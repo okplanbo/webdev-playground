@@ -1,60 +1,63 @@
-import { Paper, Typography } from '@mui/material';
+import { useEffect, useState, Suspense } from 'react';
+import { Link, Route, Routes, useLocation } from 'react-router-dom';
+import Typography from '@mui/material/Typography';
 
-import './App.scss'
+import Home from './pages/Home/Home';
+import Todo from './pages/Todo/Todo';
+
+import { APP_TITLE, PAGES } from './constants';
+
+import './App.scss';
 
 function App() {
-  // add routes, rafc new lazy module
-  // do i really need vite-plugin-stylelint?
-  // check postcss stuff, autoprefixer
-  // use grid for cards
-  // tailwind? deploy gh pages or vercel
-  // add link to my gists to personal site
-  
+  const location = useLocation();
+  const [pageName, setPageName] = useState('');
+
+  useEffect(() => {
+    if (location.pathname === '/') {
+      setPageName('');
+    }
+
+    Object.values(PAGES).forEach(page => {
+      if (location.pathname.includes(page.path)) {
+        setPageName(` / ${page.title}`)
+      }
+    });
+  }, [location]);
+
   return (
     <>
       <Typography variant="h2" component="h1">
-        Webdev Playground
+        {pageName
+          ? <><Link to={'/'}>{APP_TITLE}</Link> {pageName}</>
+          : APP_TITLE
+        }
       </Typography>
-      <Paper
-        variant="outlined"
-        className='container'
-        sx={{
-          display: 'flex',
-          flexDirection: 'row',
-          marginTop: '3em',
-        }}
-      >
-        <div className="card">
-          <Typography variant="h4" component="h2">
-            Stack
-          </Typography>
-          <ul>
-            <li>Vite + React + TS</li>
-            <li>MUI</li>
-            <li><a href='https://github.com/sindresorhus/modern-normalize' target='_blank'>Modern Normalize</a></li>
-            <li>PostCSS, Sass</li>
-            <li>Stylelint, ESlint</li>
-            <li>Husky</li>
-          </ul>
-        </div>
-        <div className="card">
-          <Typography variant="h4" component="h2">
-            Pages
-          </Typography>
-          <ul>
-            <li>ToDo</li>
-            <li>Uno</li>
-            <li>Dos</li>
-            <li>Tres</li>
-          </ul>
-        </div>
-      </Paper>
+
+      <Routes>
+        <Route path="/"
+          element={<Home />}
+        />
+        <Route
+          path={PAGES.todo.path}
+          element={
+            <Suspense fallback={<>...</>}>
+              <Todo />
+            </Suspense>
+          }
+        />
+      </Routes>
+
       <footer>
         <p>2023</p>
-        <p><a href='https://github.com/ok-plan-b/' target='_blank'>github.com/ok-plan-b</a></p>
+        <p>
+          <a href='https://github.com/ok-plan-b/' rel="noreferrer" target='_blank'>
+            github.com/ok-plan-b
+          </a>
+        </p>
       </footer>
     </>
   )
 }
 
-export default App
+export default App;
