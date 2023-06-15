@@ -1,11 +1,11 @@
-import { useEffect, useState, Suspense } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, Route, Routes, useLocation } from 'react-router-dom';
 import Typography from '@mui/material/Typography';
 
 import Home from './pages/Home/Home';
 import Todo from './pages/Todo/Todo';
 
-import { APP_TITLE, PAGES } from './constants';
+import { APP_TITLE, PAGES, BASE } from './constants';
 
 import './App.scss';
 
@@ -14,7 +14,7 @@ function App() {
   const [pageName, setPageName] = useState('');
 
   useEffect(() => {
-    if (location.pathname === '/') {
+    if (location.pathname === `/${BASE}`) {
       setPageName('');
     }
 
@@ -29,22 +29,18 @@ function App() {
     <>
       <Typography variant="h2" component="h1">
         {pageName
-          ? <><Link to={'/'}>{APP_TITLE}</Link> {pageName}</>
+          ? <><Link to={BASE}>{APP_TITLE}</Link> {pageName}</>
           : APP_TITLE
         }
       </Typography>
 
       <Routes>
-        <Route path="/"
+        <Route path={`/${BASE}`}
           element={<Home />}
         />
         <Route
           path={PAGES.todo.path}
-          element={
-            <Suspense fallback={<>...</>}>
-              <Todo />
-            </Suspense>
-          }
+          element={<Todo />}
         />
       </Routes>
 
