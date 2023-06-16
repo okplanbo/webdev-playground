@@ -11,7 +11,7 @@ import './App.scss';
 
 function App() {
   const location = useLocation();
-  const [pageName, setPageName] = useState('');
+  const [pageName, setPageName] = useState<string>('');
 
   useEffect(() => {
     if (location.pathname === `/${BASE}`) {
@@ -45,8 +45,12 @@ function App() {
       </Routes>
 
       <footer>
-        <p>2023</p>
+        <p>{new Date().getFullYear()}</p>
         <p>
+          <a href='/'>
+            Home
+          </a>
+          {` / `}
           <a href='https://github.com/ok-plan-b/' rel="noreferrer" target='_blank'>
             github.com/ok-plan-b
           </a>
