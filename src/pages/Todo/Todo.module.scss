@@ -1,3 +1,44 @@
-.container {
-  margin: 3em auto 0;
+.wrapper {
+  align-items: center;
+}
+
+table.todo {
+  overflow-x: scroll;
+  width: 100%;
+}
+
+table.todo,
+.empty {
+  margin: 3rem auto 0;
+  min-height: 8.5rem;
+}
+
+.empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.editForm {
+  margin-top: 1rem;
+  display: grid;
+  gap: 1rem;
+  min-width: 400px;
+}
+
+button.addTask {
+  margin: 20px;
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+
+.done {
+  text-decoration: line-through;
+}
+
+.description {
+  max-width: 20vw;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
