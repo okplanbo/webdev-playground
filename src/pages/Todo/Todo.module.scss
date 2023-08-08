@@ -19,14 +19,14 @@ table.todo,
   justify-content: center;
 }
 
-.editForm {
+.form {
   margin-top: 1rem;
   display: grid;
   gap: 1rem;
   min-width: 400px;
 }
 
-button.addTask {
+button.add {
   margin: 20px;
   flex-grow: 0;
   flex-shrink: 0;

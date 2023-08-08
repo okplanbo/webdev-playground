@@ -86,7 +86,7 @@ export default function Todo() {
     setAddTaskModalOpen(true)
   };
 
-  const toggleDone = (id: number, value: any) => {
+  const toggleDone = (id: number, value: boolean) => {
     const updatedRows = rows.map((row) =>
       row.id !== id ? row : { ...row, done: value }
     )
@@ -165,7 +165,7 @@ export default function Todo() {
           color="primary"
           aria-label="add"
           onClick={() => setAddTaskModalOpen(true)}
-          className={styles.addTask}
+          className={styles.add}
           size="medium"
         >
           <AddIcon />
@@ -175,7 +175,7 @@ export default function Todo() {
       {/* Add/Edit modal */}
       <Dialog open={addTaskModalOpen} onClose={() => closeEditModal()}>
         <DialogTitle>{temp.id ? "Edit Task" : "Add New Task"}</DialogTitle>
-        <DialogContent className={styles.editForm}>
+        <DialogContent className={styles.form}>
           <TextField
             label="Description"
             fullWidth
