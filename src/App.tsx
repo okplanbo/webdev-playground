@@ -28,13 +28,13 @@ function App() {
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <Typography variant="h2" component="h1">
         {pageName
-          ? <><Link to={BASE}>{APP_TITLE}</Link> {pageName}</>
+          ? <><Link to='/'>{APP_TITLE}</Link> {pageName}</>
           : APP_TITLE
         }
       </Typography>
 
       <Routes>
-        <Route path={`/${BASE}`}
+        <Route path='/'
           element={<Home />}
         />
         <Route

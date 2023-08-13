@@ -2,7 +2,7 @@ export const BASE = 'webdev-playground';
 
 export const PAGES = {
   todo: {
-    path: `/${BASE}/todo`,
+    path: `/todo`,
     title: 'Todo List'
   }
 };
