@@ -24,6 +24,7 @@ table.todo,
   display: grid;
   gap: 1rem;
   min-width: 400px;
+  grid-template-rows: min-content;
 }
 
 button.add {
