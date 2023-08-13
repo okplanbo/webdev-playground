@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { format } from 'date-fns';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -19,6 +19,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
+import Tooltip from '@mui/material/Tooltip';
 
 import styles from './Todo.module.scss';
 
@@ -36,6 +37,8 @@ const tempDefault = {
   description: null,
   deadline: null
 }
+
+const widthLimit = 700;
 
 const today = new Date();
 
@@ -55,6 +58,18 @@ export default function Todo() {
   const [addTaskModalOpen, setAddTaskModalOpen] = useState(false);
   const [isHintVisible, setIsHintVisible] = useState(false);
   const isDescriptionEmpty = temp.description === '';
+  const [innerWidth, setInnerWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    }
+  }, []);
+
+  function handleResize() {
+    setInnerWidth(window.innerWidth);
+  }
 
   const saveTask = () => {
     if (!temp.deadline || !temp.description || temp.deadline < today) {
@@ -116,6 +131,8 @@ export default function Todo() {
     setIsHintVisible(false);
   }
 
+  const isMobile = innerWidth <= widthLimit; // TODO: redo with useMediaQuery?
+
   return (
     <>
       <div className={styles.wrapper}>
@@ -125,7 +142,9 @@ export default function Todo() {
               <TableRow>
                 <TableCell>Done</TableCell>
                 <TableCell>Description</TableCell>
-                <TableCell align="right">Date added</TableCell>
+                {!isMobile && (
+                  <TableCell align="right">Date added</TableCell>
+                )}
                 <TableCell align="right">Deadline</TableCell>
                 <TableCell></TableCell>
               </TableRow>
@@ -139,10 +158,18 @@ export default function Todo() {
                       onChange={(e) => toggleDone(row.id, e.target.checked)}
                     />
                   </TableCell>
-                  <TableCell className={styles.description}>
-                    {row.description}
+                  <TableCell className={styles.description} title={!isMobile && row.description ? row.description : ''}>
+                    {isMobile ? (
+                      <Tooltip title={`${row.description}, added on ${format(new Date(row.dateAdded), 'PP')}`}>
+                        <div style={{textOverflow: 'ellipsis', overflow: 'hidden'}}>
+                          {row.description}
+                        </div>
+                      </Tooltip>
+                    ) : row.description}
                   </TableCell>
-                  <TableCell align="right">{format(new Date(row.dateAdded), 'PP')}</TableCell>
+                  {!isMobile && (
+                    <TableCell align="right">{format(new Date(row.dateAdded), 'PP')}</TableCell>
+                  )}
                   <TableCell align="right">
                     {row.deadline ? format(new Date(row.deadline), 'PP') : null}
                   </TableCell>
@@ -173,7 +200,11 @@ export default function Todo() {
       </div>
 
       {/* Add/Edit modal */}
-      <Dialog open={addTaskModalOpen} onClose={() => closeEditModal()}>
+      <Dialog
+        fullScreen={isMobile}
+        open={addTaskModalOpen}
+        onClose={() => closeEditModal()}
+      >
         <DialogTitle>{temp.id ? "Edit Task" : "Add New Task"}</DialogTitle>
         <DialogContent className={styles.form}>
           <TextField
@@ -207,6 +238,7 @@ export default function Todo() {
 
       {/* Delete confirmation */}
       <Dialog
+        fullScreen={isMobile}
         open={deleteConfirmOpen}
         onClose={() => setDeleteConfirmOpen(false)}
       >
