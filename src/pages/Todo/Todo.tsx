@@ -137,7 +137,7 @@ export default function Todo() {
     <>
       <div className={styles.wrapper}>
         {rows.length > 0 ? (
-          <Table sx={{ minWidth: '40vw' }} aria-label="simple table" className={styles.todo}>
+          <Table aria-label="simple table" className={styles.todo}>
             <TableHead>
               <TableRow>
                 <TableCell>Done</TableCell>
